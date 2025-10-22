@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1734725773548457482}
   - component: {fileID: 2662471372367294729}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: LetterText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 6883828674491972781}
   - component: {fileID: 8826518314708307855}
   - component: {fileID: 8256024051927062601}
+  - component: {fileID: 1517283831454908501}
   m_Layer: 5
   m_Name: Key
   m_TagString: Untagged
@@ -203,7 +204,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -257,3 +258,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1517283831454908501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3770226408292548020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d50c8c29a37754d8fdbc4a520feced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeyboardKey
+  letterText: {fileID: 2662471372367294729}
