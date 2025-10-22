@@ -26,4 +26,6 @@ public class LetterContainer : MonoBehaviour
     {
         this.letter.text = letter.ToString();
     }
+
+    public char Letter => this.letter.text[0];
 }

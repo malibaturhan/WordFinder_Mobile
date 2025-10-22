@@ -7,6 +7,9 @@ public class InputManager : MonoBehaviour
     [Header("***Elements***")]
     [SerializeField] private WordContainer[] wordContainers;
 
+    [Header("***Settings***")]
+    [SerializeField] private int currentWordContainerIndex;
+
     void Start()
     {
         Initialize();
@@ -15,9 +18,28 @@ public class InputManager : MonoBehaviour
 
     private void KeyPressedCallback(char letter)
     {
-        wordContainers[0].Add(letter);
+        wordContainers[currentWordContainerIndex].Add(letter);
+        if (wordContainers[currentWordContainerIndex].IsComplete)
+        {
+            CheckWord();
+        }
     }
 
+    private void CheckWord()
+    {
+        string wordToCheck = wordContainers[currentWordContainerIndex].GetWord();
+        string secretWord = WordManager.Instance.SecretWord;
+
+        if(wordToCheck == secretWord)
+        {
+            Debug.Log("LEVEL COMPLETE");
+        }
+        else
+        {
+            Debug.Log("GOING TO OTHER LINE");
+            currentWordContainerIndex++;
+        }
+    }
 
     private void Initialize()
     {

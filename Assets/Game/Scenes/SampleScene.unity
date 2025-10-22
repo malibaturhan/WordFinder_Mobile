@@ -3257,6 +3257,7 @@ MonoBehaviour:
   - {fileID: 186897739}
   - {fileID: 184377526}
   - {fileID: 1847104350}
+  currentWordContainerIndex: 0
 --- !u!4 &1351747505
 Transform:
   m_ObjectHideFlags: 0
@@ -5060,6 +5061,51 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8305655843454275507, guid: cfa7e23b24d7b9e41be8b85b3fc181e8, type: 3}
   m_PrefabInstance: {fileID: 1704403239}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1708997498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1708997500}
+  - component: {fileID: 1708997499}
+  m_Layer: 0
+  m_Name: WordManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1708997499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708997498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3237f3f9c19a344caea6da0d720c715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WordManager
+  secretWord: UDEMY
+--- !u!4 &1708997500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708997498}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1744529958
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6441,3 +6487,4 @@ SceneRoots:
   - {fileID: 1468177794}
   - {fileID: 121459598}
   - {fileID: 1351747505}
+  - {fileID: 1708997500}
