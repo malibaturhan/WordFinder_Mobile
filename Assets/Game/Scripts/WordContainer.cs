@@ -8,10 +8,10 @@ public class WordContainer : MonoBehaviour
     void Awake()
     {
         letterContainers = GetComponentsInChildren<LetterContainer>();
-        Initialize();
+        //Initialize();
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         for (int i = 0; i < letterContainers.Length; i++) 
         {
@@ -19,14 +19,8 @@ public class WordContainer : MonoBehaviour
         }
     }
 
-    void Start()
+    public void Add(char letter)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        letterContainers[0].SetLetter(letter);
     }
 }
