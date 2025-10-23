@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
 
     [Header("***Settings***")]
     [SerializeField] private int currentWordContainerIndex;
+    private bool canAddLetter = true;
 
     void Start()
     {
@@ -18,14 +19,17 @@ public class InputManager : MonoBehaviour
 
     private void KeyPressedCallback(char letter)
     {
+        if (!canAddLetter) return;
+
         wordContainers[currentWordContainerIndex].Add(letter);
+
         if (wordContainers[currentWordContainerIndex].IsComplete)
         {
-            CheckWord();
+            canAddLetter = false;
         }
     }
 
-    private void CheckWord()
+    public void CheckWord()
     {
         string wordToCheck = wordContainers[currentWordContainerIndex].GetWord();
         string secretWord = WordManager.Instance.SecretWord;
@@ -37,8 +41,14 @@ public class InputManager : MonoBehaviour
         else
         {
             Debug.Log("GOING TO OTHER LINE");
+            canAddLetter = true;
             currentWordContainerIndex++;
         }
+    }
+
+    public void BackspacePressedCallback()
+    {
+        wordContainers[currentWordContainerIndex].RemoveLetter();
     }
 
     private void Initialize()

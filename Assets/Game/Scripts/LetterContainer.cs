@@ -6,17 +6,8 @@ public class LetterContainer : MonoBehaviour
 {
     [Header("***Elements***")]
     [SerializeField] private TextMeshPro letter;
+    public char Letter => this.letter.text[0];
     
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void Initialize()
     {
         letter.text = "";        
@@ -27,5 +18,4 @@ public class LetterContainer : MonoBehaviour
         this.letter.text = letter.ToString();
     }
 
-    public char Letter => this.letter.text[0];
 }

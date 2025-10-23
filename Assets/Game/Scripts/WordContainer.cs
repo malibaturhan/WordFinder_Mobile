@@ -17,7 +17,7 @@ public class WordContainer : MonoBehaviour
 
     public void Initialize()
     {
-        for (int i = 0; i < letterContainers.Length; i++) 
+        for (int i = 0; i < letterContainers.Length; i++)
         {
             letterContainers[i].Initialize();
         }
@@ -28,6 +28,17 @@ public class WordContainer : MonoBehaviour
         letterContainers[currentLetterIndex].SetLetter(letter);
         currentLetterIndex++;
     }
+
+    public bool IsComplete => currentLetterIndex >= letterContainers.Length;
+
+    public void RemoveLetter()
+    {
+        Debug.Log("current letter index" +currentLetterIndex);
+        if (currentLetterIndex < 1) return;
+        currentLetterIndex--;
+        letterContainers[currentLetterIndex].Initialize();
+    }
+
     public string GetWord()
     {
         StringBuilder sb = new StringBuilder();
@@ -38,5 +49,4 @@ public class WordContainer : MonoBehaviour
         return sb.ToString();
     }
 
-    public bool IsComplete => currentLetterIndex >= letterContainers.Length;
 }
