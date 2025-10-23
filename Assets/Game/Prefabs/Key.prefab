@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeyboardKey
   letterText: {fileID: 2662471372367294729}
+  renderer: {fileID: 8826518314708307855}
 --- !u!114 &3087307698702037736
 MonoBehaviour:
   m_ObjectHideFlags: 0

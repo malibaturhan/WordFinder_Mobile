@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
@@ -31,6 +33,7 @@ public class WordContainer : MonoBehaviour
 
     public bool IsComplete => currentLetterIndex >= letterContainers.Length;
 
+
     public bool RemoveLetter()
     {
         if (currentLetterIndex < 1)
@@ -54,18 +57,24 @@ public class WordContainer : MonoBehaviour
 
     public void Colorize(string secretWord)
     {
-        for (int i = 0; i < letterContainers.Length; i++) 
+        List<char> chars = new List<char>(secretWord.ToCharArray());
+
+        for (int i = 0; i < letterContainers.Length; i++)
         {
+            Debug.Log($"to colorize iteration {i}");
+
             char letterToCheck = letterContainers[i].Letter;
             if (letterToCheck == secretWord[i])
             {
                 // VALID
                 letterContainers[i].SetValid();
+                chars.Remove(letterToCheck);
             }
-            else if (secretWord.Contains(letterToCheck))
+            else if (chars.Contains(letterToCheck))
             {
                 // Potential
                 letterContainers[i].SetPotential();
+                chars.Remove(letterToCheck);
             }
             else 
             {

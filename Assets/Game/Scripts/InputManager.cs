@@ -8,10 +8,12 @@ public class InputManager : MonoBehaviour
     [Header("***Elements***")]
     [SerializeField] private WordContainer[] wordContainers;
     [SerializeField] private Button tryButton;
+    [SerializeField] private KeyboardColorizer keyboardColorizer;
 
     [Header("***Settings***")]
     [SerializeField] private int currentWordContainerIndex;
     private bool canAddLetter = true;
+    [SerializeField] private int scoreToCoinMultiplier = 3;
 
     void Start()
     {
@@ -38,11 +40,11 @@ public class InputManager : MonoBehaviour
         string secretWord = WordManager.Instance.SecretWord;
 
         wordContainers[currentWordContainerIndex].Colorize(secretWord);
+        keyboardColorizer.Colorize(secretWord, wordToCheck);
 
         if(wordToCheck == secretWord)
         {
-            Debug.Log("LEVEL COMPLETE");
-            DisableTryButton();
+            SetLevelComplete();
         }
         else
         {
@@ -51,6 +53,19 @@ public class InputManager : MonoBehaviour
             DisableTryButton();
             currentWordContainerIndex++;
         }
+    }
+
+    private void SetLevelComplete()
+    {
+        UpdateData();
+        GameManager.Instance.SetGameState(GameState.LevelComplete);
+    }
+
+    private void UpdateData()
+    {
+        int scoreToAdd = wordContainers.Length - currentWordContainerIndex;
+        DataManager.Instance.IncreaseScore(scoreToAdd);
+        DataManager.Instance.AddCoins(scoreToAdd * scoreToCoinMultiplier);
     }
 
     public void BackspacePressedCallback()
