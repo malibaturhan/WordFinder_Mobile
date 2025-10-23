@@ -31,12 +31,15 @@ public class WordContainer : MonoBehaviour
 
     public bool IsComplete => currentLetterIndex >= letterContainers.Length;
 
-    public void RemoveLetter()
+    public bool RemoveLetter()
     {
-        Debug.Log("current letter index" +currentLetterIndex);
-        if (currentLetterIndex < 1) return;
+        if (currentLetterIndex < 1)
+        {
+            return false;
+        }
         currentLetterIndex--;
         letterContainers[currentLetterIndex].Initialize();
+        return true;
     }
 
     public string GetWord()
@@ -47,6 +50,29 @@ public class WordContainer : MonoBehaviour
             sb.Append(letterContainers[i].Letter);
         }
         return sb.ToString();
+    }
+
+    public void Colorize(string secretWord)
+    {
+        for (int i = 0; i < letterContainers.Length; i++) 
+        {
+            char letterToCheck = letterContainers[i].Letter;
+            if (letterToCheck == secretWord[i])
+            {
+                // VALID
+                letterContainers[i].SetValid();
+            }
+            else if (secretWord.Contains(letterToCheck))
+            {
+                // Potential
+                letterContainers[i].SetPotential();
+            }
+            else 
+            {
+                // INVALID
+                letterContainers[i].SetInvalid();
+            }
+        }
     }
 
 }

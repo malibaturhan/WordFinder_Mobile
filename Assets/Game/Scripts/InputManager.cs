@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
 
     [Header("***Elements***")]
     [SerializeField] private WordContainer[] wordContainers;
+    [SerializeField] private Button tryButton;
 
     [Header("***Settings***")]
     [SerializeField] private int currentWordContainerIndex;
@@ -26,6 +28,7 @@ public class InputManager : MonoBehaviour
         if (wordContainers[currentWordContainerIndex].IsComplete)
         {
             canAddLetter = false;
+            EnableTryButton();
         }
     }
 
@@ -34,21 +37,40 @@ public class InputManager : MonoBehaviour
         string wordToCheck = wordContainers[currentWordContainerIndex].GetWord();
         string secretWord = WordManager.Instance.SecretWord;
 
+        wordContainers[currentWordContainerIndex].Colorize(secretWord);
+
         if(wordToCheck == secretWord)
         {
             Debug.Log("LEVEL COMPLETE");
+            DisableTryButton();
         }
         else
         {
             Debug.Log("GOING TO OTHER LINE");
             canAddLetter = true;
+            DisableTryButton();
             currentWordContainerIndex++;
         }
     }
 
     public void BackspacePressedCallback()
     {
-        wordContainers[currentWordContainerIndex].RemoveLetter();
+        bool removedLetter = wordContainers[currentWordContainerIndex].RemoveLetter();
+        if (removedLetter) 
+        {
+            DisableTryButton();
+        }
+            canAddLetter = true;
+    }
+
+    private void EnableTryButton()
+    {
+        tryButton.interactable = true;
+    }
+    
+    private void DisableTryButton()
+    {
+        tryButton.interactable = false;
     }
 
     private void Initialize()
