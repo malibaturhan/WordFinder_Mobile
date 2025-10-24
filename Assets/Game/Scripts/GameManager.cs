@@ -34,6 +34,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool IsInGameState => gamestate == GameState.Game;
+
+
     public void SetGameState(GameState gameState)
     {
         this.gamestate = gameState;
@@ -43,4 +46,5 @@ public class GameManager : MonoBehaviour
     {
         SetGameState(GameState.Game);
     }
+
 }

@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [Header("***Elements***")]
     [SerializeField] private CanvasGroup gameCG;
     [SerializeField] private CanvasGroup levelCompleteCG;
+    [SerializeField] private CanvasGroup gameOverCG;
 
     [Header("***Level Complete Elements***")]
     [SerializeField] private TextMeshProUGUI levelCompleteCoins;
@@ -19,6 +20,11 @@ public class UIManager : MonoBehaviour
     [Header("*** Game Elements***")]
     [SerializeField] private TextMeshProUGUI gameCoins;
     [SerializeField] private TextMeshProUGUI gameScore;
+
+    [Header("***Game Over Elements***")]
+    [SerializeField] private TextMeshProUGUI gameOverCoins;
+    [SerializeField] private TextMeshProUGUI gameOverSecretWord;
+    [SerializeField] private TextMeshProUGUI gameOverBestScore;
 
     void Awake()
     {
@@ -38,6 +44,7 @@ public class UIManager : MonoBehaviour
         GameManager.OnGameStateChanged += GameStateChangedCallback;
         ShowGame();
         HideLevelComplete();
+        HideGameOver();
     }
 
     private void GameStateChangedCallback(GameState gameState)
@@ -45,8 +52,19 @@ public class UIManager : MonoBehaviour
         switch (gameState) 
         {
             case GameState.LevelComplete:
-                ShowLevelComplete();
                 HideGame();
+                HideGameOver();
+                ShowLevelComplete();
+                break;
+            case GameState.Game:
+                HideLevelComplete();
+                HideGameOver();
+                ShowGame();
+                break;
+            case GameState.GameOver:
+                HideLevelComplete();
+                HideGame();
+                ShowGameOver();
                 break;
 
 
@@ -75,6 +93,18 @@ public class UIManager : MonoBehaviour
     private void HideLevelComplete()
     {
         HideCG(levelCompleteCG);
+    }
+    private void ShowGameOver()
+    {
+        gameOverCoins.text = DataManager.Instance.Coins.ToString();
+        gameOverBestScore.text = DataManager.Instance.BestScore.ToString();
+        gameOverSecretWord.text = WordManager.Instance.SecretWord;
+        ShowCG(gameOverCG);
+
+    }
+    private void HideGameOver()
+    {
+        HideCG(gameOverCG);
     }
 
     private void ShowCG(CanvasGroup cg)

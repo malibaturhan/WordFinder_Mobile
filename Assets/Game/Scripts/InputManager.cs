@@ -19,7 +19,25 @@ public class InputManager : MonoBehaviour
     {
         Initialize();
         KeyboardKey.onKeyPressed += KeyPressedCallback;
+        GameManager.OnGameStateChanged += GameStateChangedCallback;
+
     }
+
+    private void GameStateChangedCallback(GameState gameState)
+    {
+        switch (gameState)
+        {
+            case GameState.LevelComplete:
+
+                break;
+            case GameState.Game:
+                Initialize();
+                break;
+
+
+        }
+    }
+
 
     private void KeyPressedCallback(char letter)
     {
@@ -42,16 +60,28 @@ public class InputManager : MonoBehaviour
         wordContainers[currentWordContainerIndex].Colorize(secretWord);
         keyboardColorizer.Colorize(secretWord, wordToCheck);
 
-        if(wordToCheck == secretWord)
+        if (wordToCheck == secretWord)
         {
             SetLevelComplete();
         }
-        else
+        else // WRONG WORD
         {
-            Debug.Log("GOING TO OTHER LINE");
-            canAddLetter = true;
-            DisableTryButton();
             currentWordContainerIndex++;
+            DisableTryButton();
+            Debug.LogWarning("current word container index" + currentWordContainerIndex);
+            Debug.LogWarning("current word container length" + wordContainers.Length);
+            if (currentWordContainerIndex >= wordContainers.Length)
+            {
+                Debug.Log("GAME OVER");
+                DataManager.Instance.ResetScore();
+                GameManager.Instance.SetGameState(GameState.GameOver);
+            }
+            else
+            {
+                canAddLetter = true;
+
+
+            }
         }
     }
 
@@ -70,19 +100,21 @@ public class InputManager : MonoBehaviour
 
     public void BackspacePressedCallback()
     {
+        if (!GameManager.Instance.IsInGameState) return;
+
         bool removedLetter = wordContainers[currentWordContainerIndex].RemoveLetter();
-        if (removedLetter) 
+        if (removedLetter)
         {
             DisableTryButton();
         }
-            canAddLetter = true;
+        canAddLetter = true;
     }
 
     private void EnableTryButton()
     {
         tryButton.interactable = true;
     }
-    
+
     private void DisableTryButton()
     {
         tryButton.interactable = false;
@@ -90,7 +122,12 @@ public class InputManager : MonoBehaviour
 
     private void Initialize()
     {
-        for (int i = 0; i < wordContainers.Length; i++) 
+        currentWordContainerIndex = 0;
+        canAddLetter = true;
+
+        DisableTryButton();
+
+        for (int i = 0; i < wordContainers.Length; i++)
         {
             wordContainers[i].Initialize();
         }
@@ -99,5 +136,7 @@ public class InputManager : MonoBehaviour
     private void OnDisable()
     {
         KeyboardKey.onKeyPressed -= KeyPressedCallback;
+        GameManager.OnGameStateChanged -= GameStateChangedCallback;
     }
+
 }

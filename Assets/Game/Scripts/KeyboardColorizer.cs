@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class KeyboardColorizer : MonoBehaviour
@@ -9,15 +10,34 @@ public class KeyboardColorizer : MonoBehaviour
     {
         keys = GetComponentsInChildren<KeyboardKey>();
     }
-    void Start()
-    {
 
+    private void Start()
+    {
+        GameManager.OnGameStateChanged += GameStateChangedCallback;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
+    private void GameStateChangedCallback(GameState gameState)
+    {
+        switch (gameState)
+        {
+            case GameState.LevelComplete:
+                
+                break;
+            case GameState.Game:
+                Initialize();
+                break;
+
+
+        }
+    }
+
+    private void Initialize()
+    {
+        for (int i = 0; i < keys.Length; i++) 
+        {
+            keys[i].Initialize();
+        }
     }
 
     public void Colorize(string secretWord, string wordToCheck)
@@ -50,5 +70,10 @@ public class KeyboardColorizer : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameStateChanged -= GameStateChangedCallback;
     }
 }

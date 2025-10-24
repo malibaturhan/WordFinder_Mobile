@@ -52,10 +52,14 @@ public class DataManager : MonoBehaviour
     public void IncreaseScore(int amount)
     {
         score += amount;
-        if(score > bestScore) bestScore = score;
+        if (score > bestScore) bestScore = score;
         SaveData();
     }
-
+    public void ResetScore()
+    {
+        score = 0;
+        SaveData();
+    }
 
     private void LoadData()
     {
@@ -77,4 +81,5 @@ public class DataManager : MonoBehaviour
         PlayerPrefs.SetInt(BestScorePlayerPrefKey, 0);
         PlayerPrefs.SetInt(ScorePlayerPrefKey, 0);
     }
+
 }
