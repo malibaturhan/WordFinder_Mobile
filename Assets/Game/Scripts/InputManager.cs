@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
+    public static InputManager Instance;
 
     [Header("***Elements***")]
     [SerializeField] private WordContainer[] wordContainers;
@@ -14,6 +16,21 @@ public class InputManager : MonoBehaviour
     [SerializeField] private int currentWordContainerIndex;
     private bool canAddLetter = true;
     [SerializeField] private int scoreToCoinMultiplier = 3;
+
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+     
+    }
 
     void Start()
     {
@@ -139,4 +156,6 @@ public class InputManager : MonoBehaviour
         GameManager.OnGameStateChanged -= GameStateChangedCallback;
     }
 
+    public WordContainer CurrentWordContainer => wordContainers[currentWordContainerIndex];
+    
 }

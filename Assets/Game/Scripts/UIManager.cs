@@ -7,9 +7,14 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     [Header("***Elements***")]
+    [SerializeField] private CanvasGroup MenuCG;
     [SerializeField] private CanvasGroup gameCG;
     [SerializeField] private CanvasGroup levelCompleteCG;
     [SerializeField] private CanvasGroup gameOverCG;
+
+    [Header("***Menu Elements***")]
+    [SerializeField] private TextMeshProUGUI menuCoins;
+    [SerializeField] private TextMeshProUGUI menuBestScore;
 
     [Header("***Level Complete Elements***")]
     [SerializeField] private TextMeshProUGUI levelCompleteCoins;
@@ -25,6 +30,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameOverCoins;
     [SerializeField] private TextMeshProUGUI gameOverSecretWord;
     [SerializeField] private TextMeshProUGUI gameOverBestScore;
+
 
     void Awake()
     {
@@ -42,26 +48,36 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         GameManager.OnGameStateChanged += GameStateChangedCallback;
-        ShowGame();
+        HideGame();
         HideLevelComplete();
         HideGameOver();
+        ShowMenu();
     }
 
     private void GameStateChangedCallback(GameState gameState)
     {
         switch (gameState) 
         {
+            case GameState.Menu:
+                HideGame();
+                HideGameOver();
+                HideLevelComplete();
+                ShowMenu();
+                break;
             case GameState.LevelComplete:
+                HideMenu();
                 HideGame();
                 HideGameOver();
                 ShowLevelComplete();
                 break;
             case GameState.Game:
+                HideMenu();
                 HideLevelComplete();
                 HideGameOver();
                 ShowGame();
                 break;
             case GameState.GameOver:
+                HideMenu();
                 HideLevelComplete();
                 HideGame();
                 ShowGameOver();
@@ -71,6 +87,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void ShowMenu()
+    {
+        menuCoins.text = DataManager.Instance.Coins.ToString();
+        menuBestScore.text = DataManager.Instance.BestScore.ToString();
+        ShowCG(MenuCG);
+    }
+    private void HideMenu()
+    {
+        HideCG(MenuCG);
+    }
     private void ShowGame()
     {
         gameCoins.text = DataManager.Instance.Coins.ToString();

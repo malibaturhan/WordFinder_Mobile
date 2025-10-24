@@ -29,6 +29,8 @@ public class KeyboardKey : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(SendKeyPressedEvent);
     }
 
+    public bool IsUntouched => validity == Validity.None;
+
     public void Initialize()
     {
         renderer.color = Color.white;
