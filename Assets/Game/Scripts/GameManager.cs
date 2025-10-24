@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     }
     public void BackButtonCallback()
     {
-        SetGameState(GameState.Game);
+        SetGameState(GameState.Menu);
     }
 
 }

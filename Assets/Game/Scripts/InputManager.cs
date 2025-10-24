@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private int currentWordContainerIndex;
     private bool canAddLetter = true;
     [SerializeField] private int scoreToCoinMultiplier = 3;
+    private bool shouldReset;
 
     void Awake()
     {
@@ -29,7 +30,7 @@ public class InputManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-     
+
     }
 
     void Start()
@@ -45,10 +46,16 @@ public class InputManager : MonoBehaviour
         switch (gameState)
         {
             case GameState.LevelComplete:
-
+                shouldReset = true;
                 break;
             case GameState.Game:
-                Initialize();
+                if (shouldReset)
+                {
+                    Initialize();
+                }
+                break;
+            case GameState.GameOver:
+                shouldReset = true;
                 break;
 
 
@@ -148,6 +155,8 @@ public class InputManager : MonoBehaviour
         {
             wordContainers[i].Initialize();
         }
+
+        shouldReset = false;
     }
 
     private void OnDisable()
@@ -157,5 +166,5 @@ public class InputManager : MonoBehaviour
     }
 
     public WordContainer CurrentWordContainer => wordContainers[currentWordContainerIndex];
-    
+
 }

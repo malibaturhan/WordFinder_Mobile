@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Globalization;
 
 enum Validity
 {
@@ -37,7 +38,7 @@ public class KeyboardKey : MonoBehaviour
         validity = Validity.None;
     }
 
-    public char Letter => letterText.text[0];
+    public char Letter => letterText.text.ToUpper(CultureInfo.InvariantCulture)[0];
         
     private void SendKeyPressedEvent()
     {

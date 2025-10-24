@@ -6,6 +6,9 @@ public class KeyboardColorizer : MonoBehaviour
     [Header("***Elements***")]
     private KeyboardKey[] keys;
 
+    [Header("***Settings***")]
+    private bool shouldReset;
+
     void Awake()
     {
         keys = GetComponentsInChildren<KeyboardKey>();
@@ -22,10 +25,16 @@ public class KeyboardColorizer : MonoBehaviour
         switch (gameState)
         {
             case GameState.LevelComplete:
-                
+                shouldReset = true;
+                break;
+            case GameState.GameOver:
+                shouldReset = true;
                 break;
             case GameState.Game:
-                Initialize();
+                if (shouldReset)
+                {
+                    Initialize();
+                }
                 break;
 
 
@@ -34,10 +43,11 @@ public class KeyboardColorizer : MonoBehaviour
 
     private void Initialize()
     {
-        for (int i = 0; i < keys.Length; i++) 
+        for (int i = 0; i < keys.Length; i++)
         {
             keys[i].Initialize();
         }
+        shouldReset = false;
     }
 
     public void Colorize(string secretWord, string wordToCheck)

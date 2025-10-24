@@ -1,3 +1,4 @@
+using System.Globalization;
 using UnityEngine;
 
 public class WordManager : MonoBehaviour
@@ -8,6 +9,9 @@ public class WordManager : MonoBehaviour
     [SerializeField] private string secretWord;
     [SerializeField] private TextAsset wordsText;
     private string words;
+
+    [Header("***Settings***")]
+    private bool shouldReset;
 
     private void Awake()
     {
@@ -23,8 +27,34 @@ public class WordManager : MonoBehaviour
     }
     void Start()
     {
-        SetNewSecretWord();    
+        SetNewSecretWord();
+        GameManager.OnGameStateChanged += GameStateChangedCallback;
     }
+
+    private void GameStateChangedCallback(GameState gameState)
+    {
+        switch (gameState)
+        {
+            case GameState.Menu:
+                
+                break;
+            case GameState.LevelComplete:
+                shouldReset = true;
+                break;
+            case GameState.Game:
+                if (shouldReset)
+                {
+                    SetNewSecretWord();
+                }
+                break;
+            case GameState.GameOver:
+                shouldReset = true;
+                break;
+
+
+        }
+    }
+
 
     public string SecretWord => secretWord.ToUpper();
 
@@ -37,6 +67,13 @@ public class WordManager : MonoBehaviour
 
         int wordStartIndex = wordIndex * 7;
 
-        secretWord = words.Substring(wordStartIndex, 5).ToUpper();
+        secretWord = words.Substring(wordStartIndex, 5).ToUpper(CultureInfo.InvariantCulture);
+
+        shouldReset = false;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameStateChanged -= GameStateChangedCallback;
     }
 }
